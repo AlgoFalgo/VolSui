@@ -16,9 +16,9 @@ VolumaSui provides:
 
 It introduces a programmable attention engine, not a price oracle. Every volume push is a real, signed Sui transaction that changes token and LP state on-chain.
 
---- 
+---
 
-## 📐 Trade Execution Model
+## 📊 Trade Execution Model
 
 Let:  
 - `A` = Total input amount in SUI or token  
@@ -28,11 +28,10 @@ Let:
 
 VolumaSui transforms input into two linked transfers:
 
-Transfer(F) → relay wallet (e.g., deployer or protocol)
-
-Swap(T) → through DeepBook or Cetus pool
-
-
+```
+1. Transfer(F) → relay wallet (e.g., deployer or protocol)
+2. Swap(T)     → through DeepBook or Cetus pool
+```
 
 These are packaged in a single Sui transaction block, ensuring no off-chain custody and no spoofed volume.
 
@@ -40,15 +39,15 @@ These are packaged in a single Sui transaction block, ensuring no off-chain cust
 
 ## ⚙️ Architecture
 
+```
 Telegram Interface
-├── /push_volume → volumeHandler → TradeService → DeepBook TX
-├── /fork_bot → forkHandler → bot registry
-└── WalletMonitor → auto-triggers TradeService on deposit
+   ├── /push_volume → volumeHandler → TradeService → DeepBook TX
+   ├── /fork_bot    → forkHandler → bot registry
+   └── WalletMonitor → auto-triggers TradeService on deposit
 
 API Layer
-└── GET /txlog?wallet=0xabc... → returns TX history from /data/txlog.json
-
-
+   └── GET /txlog?wallet=0xabc... → returns TX history from /data/txlog.json
+```
 
 ---
 
@@ -89,20 +88,20 @@ This is not spoofing. This is **on-chain attention engineering**.
 
 ## 📁 Folder Structure
 
+```
 volumasui/
 ├── src/
-│ ├── index.ts # Entry point
-│ ├── config/env.ts # .env loader
-│ ├── handlers/ # Telegram commands
-│ ├── services/ # Trade logic, monitoring, logging
-│ ├── api/txlog.ts # API endpoint
-├── data/txlog.json # Trade history
+│   ├── index.ts              # Entry point
+│   ├── config/env.ts         # .env loader
+│   ├── handlers/             # Telegram commands
+│   ├── services/             # Trade logic, monitoring, logging
+│   ├── api/txlog.ts          # API endpoint
+├── data/txlog.json           # Trade history
 ├── proposal/full_proposal.md # Submission file
 ├── package.json
 ├── tsconfig.json
-├── .env # (local only)
-
-
+├── .env                      # (local only)
+```
 
 ---
 
@@ -112,29 +111,32 @@ volumasui/
 git clone https://github.com/YOUR_USERNAME/volumasui
 cd volumasui
 npm install
-Create a .env file:
+```
 
-env
-Copy
-Edit
+Create a `.env` file:
+
+```env
 BOT_TOKEN=your_telegram_token
 SUI_RPC_URL=https://sui-mainnet-endpoint
 FEE_COLLECTOR_ADDRESS=0xyourwallet
 TRADING_WALLET_ADDRESS=0xbotwallet
 DEEPBOOK_PACKAGE=0xdeepbook
-Start the system:
+```
 
-bash
-Copy
-Edit
+Start the system:
+```bash
 npm run dev
-📡 API Usage
-GET /txlog?wallet=0xabc123...
+```
+
+---
+
+## 📡 API Usage
+
+### GET `/txlog?wallet=0xabc123...`
+
 Returns all trades triggered by the wallet:
 
-json
-Copy
-Edit
+```json
 [
   {
     "txId": "0x123...",
@@ -144,33 +146,42 @@ Edit
     "timestamp": "2025-05-24T12:00:00Z"
   }
 ]
+```
+
 Used for:
+- TX logs
+- Dashboards
+- Volume/fee tracking
 
-TX logs
+---
 
-Dashboards
+## 🧠 Security & Auditability
 
-Volume/fee tracking
+- On-chain trades only — no off-chain spoofing
+- Relayer fee routing is transparent
+- TXs are logged and queryable
+- Logic is modular and service-isolated
 
-🧠 Security & Auditability
-On-chain trades only — no off-chain spoofing
+---
 
-Relayer fee routing is transparent
+## 💼 Use Cases
 
-TXs are logged and queryable
+| User Type           | Utility                                    |
+|---------------------|--------------------------------------------|
+| Token creator       | Deploy branded Telegram bot to push volume |
+| Telegram operator   | Monetize Smart Volume™ delivery via forks  |
+| Launchpad / DeFi UI | Embed bot factory as SDK                   |
+| Grant applicant     | Show ecosystem engagement via real trades  |
 
-Logic is modular and service-isolated
+---
 
-💼 Use Cases
-User Type	Utility
-Token creator	Deploy branded Telegram bot to push volume
-Telegram operator	Monetize Smart Volume™ delivery via forks
-Launchpad / DeFi UI	Embed bot factory as SDK
-Grant applicant	Show ecosystem engagement via real trades
+## 📟 License
 
-🧾 License
 MIT — build, fork, improve. Crediting helps visibility.
 
-✅ TL;DR
-VolumaSui gives Sui token teams programmable on-chain visibility.
+---
+
+## ✅ TL;DR
+
+VolumaSui gives Sui token teams programmable on-chain visibility.  
 Fork it. Push volume. Route fees. Get noticed.
