@@ -29,3 +29,10 @@ VolumaSui includes:
 - Configurable per-deployer fork
 - Compatible with both wallet and Telegram triggers
 
+Telegram Interface
+   ├── /push_volume → volumeHandler → TradeService → DeepBook TX
+   ├── /fork_bot    → forkHandler → bot registry
+   └── WalletMonitor → auto-triggers TradeService on deposit
+
+API Layer
+   └── GET /txlog?wallet=0xabc... → returns TX history from /data/txlog.json
