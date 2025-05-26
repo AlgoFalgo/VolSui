@@ -16,7 +16,7 @@ VolumaSui provides:
 
 It introduces a programmable attention engine, not a price oracle. Every volume push is a real, signed Sui transaction that changes token and LP state on-chain.
 
----
+--- 
 
 ## 📐 Trade Execution Model
 
