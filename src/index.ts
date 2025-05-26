@@ -14,6 +14,11 @@ import { txLogRoutes } from './api/txlog';
 import { strategyRoutes } from './api/strategyRoutes';
 import { RiskManager } from './services/RiskManager';
 import { StrategyLogger } from './services/StrategyLogger';
+// Add to src/index.ts
+import { analyticsRoutes } from './api/analyticsRoutes';
+
+// Register analytics routes
+app.register(analyticsRoutes, { logger: strategyLogger });
 
 const riskManager = new RiskManager();
 const strategyLogger = new StrategyLogger();
