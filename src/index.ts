@@ -10,6 +10,16 @@ import { handleForkBot } from './handlers/forkHandler';
 import { WalletMonitor } from './services/WalletMonitor';
 import { TradeService } from './services/TradeService';
 import { txLogRoutes } from './api/txlog';
+// src/index.ts
+import { strategyRoutes } from './api/strategyRoutes';
+import { RiskManager } from './services/RiskManager';
+import { StrategyLogger } from './services/StrategyLogger';
+
+const riskManager = new RiskManager();
+const strategyLogger = new StrategyLogger();
+
+// Add strategy routes
+app.register(strategyRoutes, { riskManager, strategyLogger });
 
 const bot = new Telegraf(env.BOT_TOKEN);
 
