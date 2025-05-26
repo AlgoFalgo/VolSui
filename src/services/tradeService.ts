@@ -1,32 +1,27 @@
-import { logTx } from './logTx';
+// src/services/TradeService.ts
+import { StrategyParams } from '../strategies/BaseStrategy';
 
 export class TradeService {
   constructor(
-    private suiRpcUrl: string,
-    private feeCollectorAddress: string
+    private rpcUrl: string,
+    private feeCollector: string
   ) {}
 
-  async executeTrade(params: {
-    amount: number;
-    tokenAddress: string;
-    userWallet: string;
-  }): Promise<{ txId: string }> {
-    const { amount, tokenAddress, userWallet } = params;
-    const fee = amount * 0.003;
-    const tradeAmount = amount - fee;
+  async executeTrade(params: StrategyParams): Promise<{ txId: string }> {
+    // Mock implementation - replace with actual DEX integration
+    console.log(`Executing trade for ${params.amount} tokens`);
+    
+    // Calculate fee
+    const fee = params.amount * 0.003; // 0.3% fee
+    
+    // Mock transaction ID
+    const txId = `0x${Math.random().toString(16).slice(2)}`;
+    
+    return { txId };
+  }
 
-    // 🔧 Replace this mock with actual Sui SDK trade logic
-    const fakeTxId = '0x' + Math.floor(Math.random() * 1e16).toString(16);
-
-    // Log transaction to file
-    await logTx({
-      txId: fakeTxId,
-      token: tokenAddress,
-      amount,
-      fee,
-      wallet: userWallet
-    });
-
-    return { txId: fakeTxId };
+  async isHealthy(): Promise<boolean> {
+    // Add health check implementation
+    return true;
   }
 }
