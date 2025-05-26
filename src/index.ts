@@ -6,6 +6,7 @@ import Fastify from 'fastify';
 
 import { env } from './config/env';
 import { VolumeHandler } from './handlers/volumeHandler';
+import { handleForkBot } from './handlers/forkHandler';
 import { WalletMonitor } from './services/WalletMonitor';
 import { TradeService } from './services/TradeService';
 import { txLogRoutes } from './api/txlog';
@@ -17,20 +18,21 @@ const volumeHandler = new VolumeHandler(tradeService);
 
 // Register Telegram commands
 bot.command('push_volume', (ctx) => volumeHandler.handlePushVolume(ctx));
+bot.command('fork_bot', (ctx) => handleForkBot(ctx));
 
-// Start bot
+// Start the Telegram bot
 bot.launch().then(() => {
   console.log('🤖 Telegram bot running...');
 });
 
-// Start wallet monitor
+// Start the wallet monitor
 const walletMonitor = new WalletMonitor(env.SUI_RPC_URL, tradeService);
 walletMonitor.monitorWallet(env.TRADING_WALLET_ADDRESS);
 
-// Start Fastify API
+// Start the Fastify API server
 const app = Fastify();
 app.register(txLogRoutes);
 
 app.listen({ port: 3000 }, () => {
-  console.log('🚀 API server listening on http://localhost:3000');
+  console.log('🚀 API server ready at http://localhost:3000');
 });
