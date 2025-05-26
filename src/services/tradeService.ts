@@ -1,40 +1,32 @@
-import fs from 'fs/promises';
-const LOG_PATH = './data/txlog.json';
+import { logTx } from './logTx';
 
-export async function logTx({
-  txId,
-  token,
-  amount,
-  fee,
-  wallet,
-}: {
-  txId: string,
-  token: string,
-  amount: number,
-  fee: number,
-  wallet: string
-}) {
-  const newEntry = {
-    txId,
-    token,
-    amount,
-    fee,
-    wallet,
-    timestamp: new Date().toISOString()
-  };
+export class TradeService {
+  constructor(
+    private suiRpcUrl: string,
+    private feeCollectorAddress: string
+  ) {}
 
-  try {
-    let logs = [];
-    try {
-      const raw = await fs.readFile(LOG_PATH, 'utf-8');
-      logs = JSON.parse(raw);
-    } catch (_) {
-      // No file exists yet
-    }
+  async executeTrade(params: {
+    amount: number;
+    tokenAddress: string;
+    userWallet: string;
+  }): Promise<{ txId: string }> {
+    const { amount, tokenAddress, userWallet } = params;
+    const fee = amount * 0.003;
+    const tradeAmount = amount - fee;
 
-    logs.push(newEntry);
-    await fs.writeFile(LOG_PATH, JSON.stringify(logs, null, 2));
-  } catch (e) {
-    console.error('TX logging failed:', e);
+    // 🔧 Replace this mock with actual Sui SDK trade logic
+    const fakeTxId = '0x' + Math.floor(Math.random() * 1e16).toString(16);
+
+    // Log transaction to file
+    await logTx({
+      txId: fakeTxId,
+      token: tokenAddress,
+      amount,
+      fee,
+      wallet: userWallet
+    });
+
+    return { txId: fakeTxId };
   }
 }
