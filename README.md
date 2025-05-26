@@ -32,9 +32,7 @@ Transfer(F) → relay wallet (e.g., deployer or protocol)
 
 Swap(T) → through DeepBook or Cetus pool
 
-yaml
-Copy
-Edit
+
 
 These are packaged in a single Sui transaction block, ensuring no off-chain custody and no spoofed volume.
 
@@ -50,9 +48,7 @@ Telegram Interface
 API Layer
 └── GET /txlog?wallet=0xabc... → returns TX history from /data/txlog.json
 
-yaml
-Copy
-Edit
+
 
 ---
 
@@ -106,9 +102,7 @@ volumasui/
 ├── tsconfig.json
 ├── .env # (local only)
 
-yaml
-Copy
-Edit
+
 
 ---
 
