@@ -1,34 +1,32 @@
-# VolumaSui
+# 📊 VolumaSui — Telegram-Native Smart Volume™ Engine for the Sui Blockchain
 
-> Telegram-native Smart Volume™ engine for the Sui blockchain.
+VolumaSui is a modular, on-chain trading orchestration framework that enables synthetic volume ignition on Sui through a Telegram-native interface. It is engineered to simulate authentic trade activity using real DEX execution and relay-based fee routing. Ideal for token projects, ecosystem grants, or meme launches looking to catalyze visibility through economically rational, auditable trading behavior.
 
-## 🔍 Overview
+---
 
-- Modular bot that executes volume pushes on Sui
-- Triggered via Telegram or wallet deposits
-- Supports fee-routed trades (DeepBook / Cetus)
-- Forkable via `/fork_bot` command
-- Web UI for strategy config and performance monitoring
+## 🧠 Concept Overview
 
-## 🧱 Repo Structure
+VolumaSui provides:
 
-| Folder | Description |
-|--------|-------------|
-| `src/handlers` | Telegram bot commands like `/push_volume` |
-| `src/services` | Wallet monitoring, trade execution logic |
-| `src/config` | Environment and runtime configs |
-| `docs/` | Architecture, API reference, diagrams |
-| `proposal/` | Full grant submission proposal |
-| `deploy/` | Hosting instructions and runtime scripts |
+- Permissionless volume execution via `/push_volume` or wallet deposit
+- On-chain routing through DeepBook or Cetus
+- Configurable relay fee (% of trade)
+- Forkable bot deployment (`/fork_bot`) with self-directed monetization
+- Transparent TX logging (`GET /txlog?wallet=...`)
 
-## 🛡️ Audit-Ready Practices
+It introduces a programmable attention engine, not a price oracle. Every volume push is a real, signed Sui transaction that changes token and LP state on-chain.
 
-- Modular service classes for each logic domain
-- Clear separation of config from logic
-- Inline comments for fee and routing transparency
-- Environment-based relay and token settings
-- Optional support for testnets and dry-run mode
+---
 
-## 🧠 Get Started
+## 📐 Trade Execution Model
 
-Coming soon: install + deploy guide for non-coders
+Let:
+- `A` = Total input amount in SUI or token
+- `f` = Relay fee rate (default 0.003 = 0.3%)
+- `T` = Tradeable amount → `T = A * (1 - f)`
+- `F` = Fee amount → `F = A * f`
+
+VolumaSui transforms input into two linked transfers:
+```text
+1. Transfer(F) → relay wallet (e.g., deployer or protocol)
+2. Swap(T)     → through DeepBook or Cetus pool
