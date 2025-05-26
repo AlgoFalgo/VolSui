@@ -1,0 +1,33 @@
+{
+  "name": "volumasui",
+  "version": "1.0.0",
+  "description": "Telegram-native Smart Volume™ engine for the Sui blockchain.",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "telegram-bot",
+    "sui",
+    "defi",
+    "volume",
+    "trading-bot",
+    "typescript"
+  ],
+  "author": "Your Name or Team",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "fastify": "^4.23.2",
+    "fs-extra": "^11.1.1",
+    "telegraf": "^4.12.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.2.2"
+  }
+}
